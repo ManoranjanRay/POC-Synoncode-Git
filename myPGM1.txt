@@ -1,0 +1,610 @@
+Data Stracture With Array
+        *************** Beginning of data *************************************
+0001.00 DDsName         e ds                  ExtName(NAME) Dim(10) qualified  
+0002.00 D i               s              4  0 Inz(1)                           
+0003.00                                                                        
+0004.00  /Free                                                                 
+0005.00     Exec Sql                                                           
+0006.00        Set Option                                                      
+0007.00            Commit=*None,                                               
+0008.00            DatFmt=*ISO;                                                
+0009.00                                                                        
+0010.00     Exec Sql                                                           
+0011.00         Declare @Cur Cursor for                                        
+0012.00         Select *From Name ;                                            
+0013.00     Exec Sql                                                           
+0014.00         Open @Cur ;                                                    
+0015.00     Exec Sql                                                           
+0016.00         Fetch @Cur for 9 Rows into :DsName ;                           
+0017.00                                                                        
+0018.00       Dow DsName(i).Id <> *Zero ;                                      
+0019.00           Dsply DsName(i).FName ;                                      
+0020.00           Dsply DsName(i).LName ;                                 
+0021.00           Dsply DsName(i).Address ;                               
+0022.00           i = i + 1 ;                                             
+0023.00       EndDo ;                                                     
+0024.00                                                                   
+0025.00     Exec Sql                                                      
+0026.00         Close @Cur ;                                              
+0027.00         *Inlr=*On ;                                               
+0029.00                                                  
+0030.00         BegSr *PsSr ;                            
+0031.00         Dsply 'No More data';                    
+0032.00         Return  ;                              
+0033.00         EndSr ;                                  
+0034.00  /End-Free   
+
+Compare two Table
+        *************** Beginning of data **************************************
+0001.00 FTEMP99    IF A E             DISK                                      
+0002.00 DDS1            E DS                  EXTNAME(TEMP99)                   
+0003.00                                                                         
+0004.00  /FREE                                                                  
+0005.00                                                                         
+0006.00    EXEC SQL                                                             
+0007.00      DECLARE CUR1 CURSOR FOR                                            
+0008.00      SELECT *FROM EXTDTAPRV2/XCTRRCFGDP A                               
+0009.00      WHERE NOT EXISTS(SELECT *FROM EXTDTACUR2/XCTRRCFGDP  B             
+0010.00      WHERE A.IWQYC2 =B.IWQYC2 AND A.IWQ6C2 =B.IWQ6C2)  ;                
+0011.00                                                                         
+0012.00    EXEC SQL                                                             
+0013.00      OPEN CUR1 ;                                                        
+0014.00                                                                         
+0015.00    EXEC SQL                                                             
+0016.00      FETCH CUR1 INTO :DS1 ;                                             
+0017.00                                                                         
+0018.00    DOW SQLCODE = 0 ;                                                    
+0019.00      WRITE XCTRRCFGDP ;                                                 
+0020.00    EXEC SQL                           
+0021.00      FETCH CUR1 INTO :DS1 ;           
+0022.00    ENDDO ;                            
+0023.00    EXEC SQL                           
+0024.00      CLOSE CUR1 ;                     
+0025.00                                       
+0026.00       *INLR=*ON  ;                    
+0027.00  /END-FREE                            
+        ****************** End of data *******
+
+Internal Printer programing with O-spacifcation 
+        *************** Beginning of data ***************************************
+0001.00 FPF1       IF   E           K DISK                                       
+0002.00 FQPRINT    O    F   77        PRINTER OFLIND(*In90)                      
+0003.00 DCount#           s              4  0 inz(0)                             
+0004.00 D@Total           s              4  0                                    
+0005.00 C     *LOVAL        SETLL     PF1                                        
+0006.00 C                   READ      PF1                                        
+0007.00 C                   DOW       NOT %EOF                                   
+0008.00 C                   IF        *IN90=*Off                                 
+0009.00 C                   EXCEPT    HEADER                                     
+0010.00 C                   EVAL      *IN90=*On                                  
+0011.00 C                   ENDIF                                                
+0012.00 c                   Eval      count#=count#+1                            
+0013.00 C                   EXCEPT    DETAIL                                     
+0014.00 C*                  Eval      count=count#                               
+0015.00 C                   READ      PF1                                        
+0016.00 C                   ENDDO                                                
+0017.00 c                   Eval      @Total=count#                              
+0018.00 C                   EXCEPT    Total#                                     
+0019.00 C                   EVAL      *INLR=*ON                                  
+0020.00                                                                             
+0021.00 OQPRINT    E            Header                                              
+0022.00 O                                            6 'PAGE:-'                     
+0023.00 O                       page                12                              
+0024.00 O                                           30 'THIS IS FIRST'              
+0025.00 O                                           60 'DATE:-'                     
+0026.00 O                       udate         Y     67                              
+0027.00 O          E            HEADER                                              
+0028.00 O                                           10 'Emp_Id'                     
+0029.00 O                                           20 'Emp_Name'                   
+0030.00 O                                           30 'Emp_Count'     
+0031.00 O          E            DETAIL                                 
+0032.00 O                       ID                   9                 
+0033.00 O                       NAME                23                 
+0034.00 O                       count#        1     25                 
+0035.00 O          E            Total#                                 
+0036.00 o                                           12 'Total Emp:-'   
+0037.00 O                       @Total        1     18                 
+        ****************** End of data ********************************
+
+IFS Prgram
+Simple
+        *************** Beginning of data **************************************************
+0001.00                                                                                     
+0002.00              CPYTOIMPF  FROMFILE(PNOTBL1) +                                         
+0003.00                           TOSTMF('/FORMEXTIN/PNOTBL2.CSV') +                        
+0004.00                           RCDDLM(*CRLF) STRDLM(*NONE) +                             
+0005.00                           RMVBLANK(*TRAILING)                                       
+0006.00              MONMSG     MSGID(CPF0000)                                              
+0007.00                                                                                     
+        ****************** End of data ***************************************************** 
+Standered
+        *************** Beginning of data ********************************************************
+0001.00              DCL        VAR(&PATH) TYPE(*CHAR) LEN(50)                                    
+0002.00              DCL        VAR(&FILE) TYPE(*CHAR) LEN(50)                                    
+0003.00                                                                                           
+0004.00              CHGVAR     VAR(&FILE) VALUE(PNOTBL1)                                         
+0005.00              CHGVAR     VAR(&PATH) VALUE('/FORMEXTIN/' *TCAT &FILE +                      
+0006.00                           *TCAT '.CSV')                                                   
+0007.00                                                                                           
+0008.00              ADDENVVAR  ENVVAR(STRPATH) VALUE(&PATH) REPLACE(*YES)                        
+0009.00              QSH        CMD('rm $STRPATH; touch -C 819 $STRPATH')                         
+0010.00                                                                                           
+0011.00              CPYTOIMPF  FROMFILE(&FILE) TOSTMF(&PATH) RCDDLM(*CRLF) +                     
+0012.00                           RMVBLANK(*TRAILING)                                             
+0013.00              MONMSG     MSGID(CPF0000)                                                    
+0014.00                                                                                           
+0015.00              CHGAUT     OBJ(&PATH) USER(*PUBLIC) DTAAUT(*RWX) +                           
+0016.00                           OBJAUT(*OBJMGT *OBJEXIST *OBJALTER *OBJREF)                     
+0017.00              MONMSG     MSGID(CPF0000)                                                    
+        ****************** End of data ***********************************************************
+
+Prevent Duplicate data write to a file
+        *************** Beginning of data ***************************************************
+0001.00 HDFTACTGRP(*NO)                                                                      
+0002.00 FPNOTBL1   IF A E             DISK    RENAME(PNOTBL1:PNO)                            
+0003.00 DDsPNO          E Ds                  ExtName(PNOTBL)                                
+0004.00                                                                                      
+0005.00  /Free                                                                               
+0006.00    Exec Sql                                                                          
+0007.00       Set Option Commit = *None, CloSqlCsr = *EndMod ;                               
+0008.00    Exec Sql                                                                          
+0009.00       Declare @Cur Cursor For                                                        
+0010.00       SELECT *FROM PNOTBL A WHERE NOT EXISTS(SELECT 1 FROM PNOTBL1 B                 
+0011.00       WHERE A.PNOID=B.PNOID) ;                                                       
+0012.00                                                                                      
+0013.00       CurOpen()   ;                                                                  
+0014.00       CurFetch()  ;                                                                                                                                    
+0016.00       CurClose()  ;                                                                  
+0017.00                                                                                      
+0018.00    *InLr=*On      ;                                                                  
+0019.00  /End-Free                                                                           
+0020.00                                                       
+0021.00  *   Open Cursor                                      
+0022.00 PCurOpen          B                                   
+0023.00 DCurOpen          Pi                                  
+0024.00  /Free                                                
+0025.00    Exec Sql                                           
+0026.00       Open @Cur ;                                     
+0027.00  /End-Free                                            
+0028.00 PCurOpen          E                                   
+0029.00  *   Fetch Cursor                                     
+0030.00 PCurFetch         B                               
+0031.00 DCurFetch         Pi                              
+0032.00  /Free                                            
+0033.00    Exec Sql                                       
+0034.00       Fetch @Cur Into :DsPNO ;                    
+0035.00       Dow SqlCode = *Zeros ;                      
+0036.00        MapField() ;                               
+0037.00        Write PNO  ;                               
+0038.00    Exec Sql                                       
+0039.00       Fetch @Cur Into :DsPNO ;                    
+0040.00       EndDo ;                                   
+0041.00  /End-Free                                      
+0042.00 PCurFetch         E                             
+0043.00  *   Close Cursor                               
+0044.00 PCurClose         B                             
+0045.00 DCurClose         Pi                            
+0046.00  /Free                                          
+0047.00    Exec Sql                                     
+0048.00       Close @Cur ;                              
+0049.00  /End-Free                                      
+0050.00 PCurClose         E                               
+0051.00  *   Mapping of Fields                            
+0052.00 PMapField         B                               
+0053.00 DMapField         Pi                              
+0054.00  /Free                                            
+0055.00       PNOID = PNOID             ;                 
+0056.00       PNONA = PNONA             ;                 
+0057.00       PNOMO = PNOMO             ;                 
+0058.00       PNOIN = Validation(PNONA) ;                 
+0059.00  /End-Free                                        
+0060.00 PMapField         E                                         
+0061.00  *   Fields Validation                                                            
+0062.00 PValidation       B                                             
+0063.00 DValidation       Pi            10                              
+0064.00 DPNONA                          10                              
+0065.00 DFound            S              2  0                           
+0066.00  /Free                                                          
+0067.00    Exec Sql                                                     
+0068.00      Select Count(*) Into :Found From PNOCNT                    
+0069.00      Where PNONA= :PNONA ;                                      
+0070.00        If Found > *Zeros ;                                      
+0071.00           Return 'Y' ;                                          
+0072.00        Else;                                                    
+0073.00           Return 'N' ;                                          
+0074.00        EndIf ;                                                  
+0075.00  /End-Free                                                      
+0076.00 PValidation       E         
+-----------------------------------------------------
+Delay job program
+using file reading
+0001.00              DCLF       FILE(CL_DLYPF)                                                     
+0002.00              DCL        VAR(&EOF) TYPE(*LGL)                                               
+0003.00  READ_AGAIN: DOUNTIL    COND(&EOF)                                                         
+0004.00              RCVF                                                                          
+0005.00              MONMSG     MSGID(CPF0864) EXEC(DO)                                            
+0006.00              CHGVAR     VAR(&EOF) VALUE('1')                                               
+0007.00              LEAVE                                                                         
+0008.00              ENDDO                                                                         
+0009.00              IF         COND(&VAR1 = '1') THEN(DO)                                         
+0010.00              CALL       PGM(CL_SUBR)                                                       
+0011.00              ENDDO                                                                         
+0012.00              ELSE       CMD(DO)                                                            
+0013.00              DLYJOB     DLY(10)                                                            
+0014.00              MONMSG     MSGID(CPF0000)                                                     
+0015.00              GOTO       CMDLBL(READ_AGAIN)                                                 
+0016.00              ENDDO                                                                         
+0017.00              ENDDO   
+        ****************** End of data ************************************        
+Using Open Query file
+0001.00              DCL        VAR(&EOF) TYPE(*LGL)                               
+0002.00              DCL        VAR(&TOTAL) TYPE(*DEC) LEN(10 0)                   
+0003.00              DCL        VAR(&COUNT) TYPE(*CHAR) LEN(1) VALUE('1')          
+0004.00              DLTF       FILE(USRMANO/TEMP)                                 
+0005.00              MONMSG     MSGID(CPF0000)                                     
+0006.00  READ_AGAIN: OPNQRYF    FILE((CL_DLYPF)) QRYSLT('VAR1 = 1') OPNID(P1)      
+0007.00              CPYFRMQRYF FROMOPNID(P1) TOFILE(USRMANO/TEMP) +               
+0008.00                           MBROPT(*REPLACE) CRTFILE(*YES)                   
+0009.00              RTVMBRD    FILE(TEMP) NBRCURRCD(&TOTAL)                       
+0010.00              IF         COND(&TOTAL >  0 ) THEN(DO)                        
+0011.00              CALL       PGM(CL_SUBR)                                       
+0012.00              CLOF       OPNID(P1)                                          
+0013.00              ENDDO                                                         
+0014.00              ELSE       CMD(DO)                                            
+0015.00              DLYJOB     DLY(10)                                            
+0016.00              MONMSG     MSGID(CPF0000)                                     
+0017.00              CLOF       OPNID(P1)                                          
+0018.00              GOTO       CMDLBL(READ_AGAIN)                                 
+0019.00              ENDDO                                                         
+        ****************** End of data ************************************                                                                                                          
+
+Sub Routine in CLLE
+        *************** Beginning of data ********************
+0001.00              CALLSUBR   SUBR(NAME)                    
+0002.00              SNDUSRMSG  MSG('Kumar')                  
+0003.00              SUBR       SUBR(NAME)                    
+0004.00              SNDUSRMSG  MSG('Manoranjan')             
+0005.00              ENDSUBR                                  
+        ****************** End of data ***********************
+
+Cursor with UPDATE & DELETE of Current cursor
+        *************** Beginning of data *****************************************
+0001.00 HDFTACTGRP(*NO)                                                            
+0002.00 F*PNOTBL1   IF A E             DISK    RENAME(PNOTBL1:PNO)                 
+0003.00 DDsPNO          E Ds                  ExtName(PNOTBL)                      
+0004.00 DPNOIN            S              1                                         
+0005.00                                                                            
+0006.00  /Free                                                                     
+0007.00    Exec Sql                                                                
+0008.00      Set Option Commit = *None, CloSqlCsr = *EndMod ;                      
+0009.00    Exec Sql                                                                
+0010.00       Declare @Cur Cursor For                                              
+0011.00       SELECT *FROM PNOTBL For Update of PNOID ;                            
+0012.00                                                                            
+0013.00       CurOpen()   ;                                                        
+0014.00       CurFetch()  ;                                                        
+0015.00       CurClose()  ;                                                        
+0016.00                                                                            
+0017.00    *InLr=*On      ;                                                        
+0018.00  /End-Free                                                                 
+0019.00                                                                            
+0020.00  *   Open Cursor                                   
+0021.00 PCurOpen          B                                
+0022.00 DCurOpen          Pi                               
+0023.00  /Free                                             
+0024.00    Exec Sql                                        
+0025.00       Open @Cur ;                                  
+0026.00  /End-Free                                         
+0027.00 PCurOpen          E                                
+0028.00  *   Fetch Cursor                                  
+0029.00 PCurFetch         B                                
+0030.00 DCurFetch         Pi                               
+0031.00  /Free                                             
+0032.00    Exec Sql                                        
+0033.00       Fetch @Cur Into :DsPNO ;                     
+0034.00       Dow SqlCode = *Zeros ;                       
+0035.00        MapField() ;                                
+0036.00        InsertData() ;                              
+0037.00        If SqlCode = *Zeros ;                       
+0038.00           CurDelete() ;                            
+0040.00    Exec Sql                                   
+0041.00       Fetch @Cur Into :DsPNO ;                
+0042.00       EndDo ;                                 
+0043.00  /End-Free                                    
+0044.00 PCurFetch         E                           
+0045.00  *   Close Cursor                             
+0046.00 PCurClose         B                           
+0047.00 DCurClose         Pi                          
+0048.00  /Free                                        
+0049.00    Exec Sql                                   
+0050.00       Close @Cur ;                            
+0051.00  /End-Free                                    
+0052.00 PCurClose         E                           
+0053.00  *   Mapping of Fields                        
+0054.00 PMapField         B                           
+0055.00 DMapField         Pi                          
+0056.00  /Free                                        
+0057.00       PNOID = PNOID             ;             
+0058.00       PNONA = PNONA             ;             
+0059.00       PNOMO = PNOMO             ;                             
+0060.00       PNOIN = Validation(PNONA) ;                             
+0061.00  /End-Free                                                    
+0062.00 PMapField         E                                           
+0063.00  *   Insert data into file PNOTBL1                            
+0064.00 PInsertData       B                                           
+0065.00 DInsertData       Pi                                          
+0066.00  /Free                                                        
+0067.00    Exec Sql                                                   
+0068.00     Insert into PNOTBL1(PNOID, PNONA, PNOMO, PNOIN)           
+0069.00     Values(:PNOID, :PNONA, :PNOMO, :PNOIN) ;                  
+0070.00  /End-Free                                                    
+0071.00 PInsertData       E                                           
+0072.00  *   Fields Validation                                        
+0073.00 PValidation       B                                           
+0074.00 DValidation       Pi            10                            
+0075.00 DPNONA                          10                            
+0076.00 DFound            S              2  0                         
+0077.00  /Free                                                        
+0078.00    Exec Sql                                             
+0079.00      Select Count(*) Into :Found From PNOCNT            
+0080.00      Where PNONA= :PNONA ;                              
+0081.00        If Found > *Zeros ;                              
+0082.00           Return 'Y' ;                                  
+0083.00        Else;                                            
+0084.00           Return 'N' ;                                  
+0085.00        EndIf ;                                          
+0086.00  /End-Free                                              
+0087.00 PValidation       E                                     
+0088.00  *   Delete Records from Base Table                     
+0089.00 PCurDelete        B                                     
+0090.00 DCurDelete        Pi                                    
+0091.00  /Free                                                  
+0092.00      Exec Sql                                           
+0093.00     Delete From PNOTBL                                  
+0094.00      Where Current of @Cur  ;                           
+0095.00  /End-Free                                              
+0096.00 PCurDelete        E                                     
+0097.00                                                        
+        ****************** End of data ************************      
+
+Read data from flat file using cursor 
+Flat File
+        *************** Beginning of data ************************
+0001.00                 R FLATP                                   
+0002.00                   FLATP         50                        
+        ****************** End of data ***************************
+Program 
+        *************** Beginning of data *********************************
+0001.00 FFlatp     IF A E             DISK    Rename(Flatp:Flat) PreFix(R_)              
+0002.00 DDsFlatpp       E DS                  ExtName(Flatpp)                            
+0003.00  /Free                                                                           
+0004.00                                                                                  
+0005.00    Exec Sql                                                                      
+0006.00       Set Option Commit=*None ;                                                  
+0007.00    Exec Sql                                                                      
+0008.00       Declare Cur# Cursor For                                                    
+0009.00       Select *From Flatpp     ;                                                  
+0010.00    Exec Sql                                                                      
+0011.00       Open Cur#               ;                                                  
+0012.00    Exec Sql                                                                      
+0013.00       Fetch Cur# into :DsFlatpp;                                                 
+0014.00      Dow SqlCode = *Zeros ;                                                      
+0015.00        R_Flatp = FName + '%' + LName + '&' + Address + '*' +                     
+0016.00                  %Char(Mobile);                                                  
+0017.00        Write Flat ;                                                              
+0018.00    Exec Sql                                                                      
+0019.00       Fetch Cur# into :DsFlatpp;                                                 
+0020.00      EndDo ;                                          
+0021.00    Exec Sql                                           
+0022.00       Close Cur#               ;                      
+0023.00       *InLr = *On              ;                      
+0024.00  /End-Free                                            
+        ****************** End of data ***********************       
+Commitment control   
+     *************** Beginning of data ****************************************
+0001.00              STRJRNPF   FILE(PNOTBL1) JRN(PNOTBL1)                        
+0002.00              STRCMTCTL  LCKLVL(*CHG) NFYOBJ(PNOTBL1 (*FILE)) +            
+0003.00                           DFTJRN(PNOTBL1)                                 
+0004.00              CALL       PGM(PNORPG)                                       
+0005.00              ENDCMTCTL                                                    
+0006.00              ENDJRNPF   FILE(PNOTBL1)                                     
+        ****************** End of data *******************************************
+
+DB2 Result set
+        *************** Beginning of data **************************
+0001.00  CREATE PROCEDURE RSET ()                                   
+0002.00  LANGUAGE SQL                                               
+0003.00    DYNAMIC RESULT SETS 1                                    
+0004.00                                                             
+0005.00  BEGIN                                                      
+0006.00    DECLARE CUR# CURSOR WITH RETURN FOR                      
+0007.00    SELECT *FROM PNOTBL1 ;                                   
+0008.00                                                             
+0009.00    OPEN CUR# ;                                              
+0010.00    RETURN ;                                                 
+0011.00  END                                                        
+        ****************** End of data *****************************     
+PASSWORD AUTHONICATE
+0012.00  * 05/11/17 |1.0    | FORMULARY CONNECTION TO REMOTE SERVERS        *       
+0013.00  ********************************************************************       
+0014.00 HDFTACTGRP(*NO)                                                             
+0015.00 F*                                                                          
+0016.00 DCLRCSE2EDP       PR                  ExtPgm('CLRCSE2EDP')                  
+0017.00 DS2EDP_EXT_DE                    1                                          
+0018.00 DS2EDP_INT_EN                   20                                          
+0019.00 DRCSE2EDP_FLAG                 100                                          
+0020.00 DFBLCONAUTH       PR                  ExtPgm('FBLCONAUTH')                  
+0021.00 DRemote                         10                                          
+0022.00 DApplication                    10                                          
+0023.00 DConnectPF                      10                                          
+0024.00 DFBLCONAUTH       PI                                                        
+0025.00 DRemote                         10                                          
+0026.00 DApplication                    10                                          
+0027.00 DConnectPF                      10                                          
+0028.00                                                                             
+0029.00 DREMOTESYS        S             10                                          
+0030.00 DREMTUSRID        S             10                                          
+0031.00 DREMTPASSWD       S             10                   
+0032.00 DSE2DP_FLAG       S              1                   
+0033.00 DS2EDP_EXT_DE     S             20                   
+0034.00 DS2EDP_INT_EN     S            100                   
+0035.00 D Local_System    s              8a                  
+0036.00 D Current_Server  s              8a                  
+0037.00 D GetSystemName   pr             8A                  
+0038.00 D Pgmds          SDS                                 
+0039.00 D  SDS_ExcpType          40     42                   
+0040.00 D  SDS_ExcpNbr           43     46                   
+0041.00 D  SDS_Rsvr              47     50                   
+0042.00 D  SDS_IntRPG            51     80                   
+0043.00 D  SDS_PgmLib            81     90                   
+0044.00 D  SDS_Msgdta            91    170                   
+0045.00 D  SDS_Job_Name         244    253                   
+0046.00 D  SDS_Job_User         254    263                   
+0047.00 D  SDS_Job_Nbr          264    269S 0                
+0048.00 D  SDS_Job_Date         270    275S 0                
+0049.00 D  SDS_Run_Date         276    281S 0                
+0050.00 D  SDS_Run_Time         282    287S 0                                        
+0051.00 D  SDS_Crt_Date         288    293                                           
+0052.00 D  SDS_Crt_Time         294    299                                           
+0053.00 D  SDS_CPL_Level        300    303                                           
+0054.00 D  SDS_Src_File         304    313                                           
+0055.00 D  SDS_Pgm_Name         334    343                                           
+0056.00                                                                              
+0057.00  /Free                                                                       
+0058.00     Exec Sql                                                                 
+0059.00        SET OPTION                                                            
+0060.00            commit=*none, datfmt=*iso;                                        
+0061.00    Local_System = GetSystemName();                                           
+0062.00    Exec Sql Connect to :Local_System;                                        
+0063.00    Exec sql select SGN0BJ,SGUCIT           into :REMTUSRID, :S2EDP_INT_EN    
+0064.00            from rcse2p where SGZGHO = :REMOTE and SGNXBJ =:Application;      
+0065.00    SE2DP_FLAG ='D';                                                          
+0066.00    Callp CLRCSE2EDP(SE2DP_FLAG:S2EDP_EXT_DE:S2EDP_INT_EN);                   
+0067.00                                                                              
+0068.00    Exec Sql                                                                  
+0069.00       Connect To :Remote  User :REMTUSRID Using :S2EDP_EXT_DE;        
+0070.00                                                                       
+0071.00       IF SQLCODE <>    0 and SQLCODE <>    -842;                      
+0072.00         ConnectPF= 'F' ;                                              
+0073.00       EndIf ;                                                         
+0074.00        dsply sqlcode;                                                 
+0075.00        IF SqlCode = *Zeros ;                                          
+0076.00        Exec Sql                                                       
+0077.00           Disconnect :Remote  ;                                       
+0078.00        EndIf ;                                                        
+0079.00    *Inlr = *On  ;                                                     
+0080.00                                                                       
+0081.00  /End-Free                                                            
+0082.00 P GetSystemName   B                                                   
+0083.00 D GetSystemName   PI             8A                                   
+0084.00                                                                       
+0085.00 D RtvNetAttr      PR                  ExtPgm('QWCRNETA')              
+0086.00 D  Receiver                    128    Options(*VarSize)               
+0087.00 D  SizeReceiver                 10I 0 Const                           
+0088.00 D  NbrAttrs                     10I 0 Const                    
+0089.00 D  AttrNames                    10    Const                    
+0090.00 D  ErrorStruct                        Const Like(QUSEC)        
+0091.00                                                                
+0092.00 D NetAttrs        DS                                           
+0093.00 D  NbrOffsets                   10I 0                          
+0094.00 D  OffsetTable                  10I 0 Dim(1)                   
+0095.00 D  RoomForMore                 120                             
+0096.00                                                                
+0097.00 D pNetAttr        S               *                            
+0098.00 D NetAttrTable    DS                  Based(pNetAttr)          
+0099.00 D  NetAttrName                  10                             
+0100.00 D  NetAttrDtaTyp                 1                             
+0101.00 D  NetAttrInfSts                 1                             
+0102.00 D  NetAttrDtaLen                10I 0                          
+0103.00 D  NetAttrValue                 32                             
+0104.00                                                                
+0105.00 DQUSEC            DS                                           
+0106.00 D QUSBPRV                 1      4B 0                          
+0107.00 D QUSBAVL                 5      8B 0                                   
+0108.00 D QUSEI                   9     15                                      
+0109.00 D QUSERVED               16     16                                      
+0110.00 D QUSED01                17    216                                      
+0111.00                                                                         
+0112.00 D  SystemName     S              8A                                     
+0113.00                                                                         
+0114.00  /Free                                                                  
+0115.00    QUSBPRV = %Size(QUSEC) ;                                             
+0116.00    RtvNetAttr(NetAttrs: %Size(NetAttrs): 1: 'SYSNAME': QUSEC) ;         
+0117.00                                                                         
+0118.00    If (QUSBAVL = 0) ;                                                   
+0119.00    pNetAttr = %Addr(NetAttrs) + OffsetTable(1);                         
+0120.00    EndIF ;                                                              
+0121.00                                                                         
+0122.00    If QUSBAVL > 0 or NetAttrName = 'SYSNAME' ;                          
+0123.00    SystemName = %Subst(NetAttrValue: 1: NetAttrDtaLen) ;                
+0124.00    EndIF ;                                                              
+0125.00                                                                         
+0126.00    Return  SystemName;                             
+0127.00                                                    
+0128.00  /End-Free                                         
+0129.00                                                    
+0130.00 P GetSystemName   E                                
+        ****************** End of data ********************
+OPTION(*NOPASS)
+        *************** Beginning of data *********************************************
+0001.00 h DFTACTGRP(*NO)                                                               
+0002.00 D Str             pr            20    Varying                                  
+0003.00 DFName                          10    options(*nopass)                         
+0004.00 DLName                           6    options(*nopass)                         
+0005.00                                                                                
+0006.00 DFName            s             10                                             
+0007.00 DLName            s              6                                             
+0008.00 DName             s             20                                             
+0009.00                                                                                
+0010.00  /free                                                                         
+0011.00       FName = 'Manoranjan' ;                                                   
+0012.00       LName = 'Kumar' ;                                                        
+0013.00       Name = Str(FName)      ;                                                 
+0014.00       dsply Name ;                                                             
+0015.00       *InLr = *On ;                                                            
+0016.00  /end-free                                                                     
+0017.00 P Str             B                                                            
+0018.00 D Str             pi            20    Varying                                  
+0019.00 DFName                          10    options(*nopass)                         
+0020.00 DLName                           6    options(*nopass)                  
+0021.00 DName             s             20                                      
+0022.00  /Free                                                                  
+0023.00                                                                         
+0024.00        Select ;                                                         
+0025.00        When %Parms() = 1 ;                                              
+0026.00        Name = FName ;                                                   
+0027.00        Return Name ;                                                    
+0028.00                                                                         
+0029.00        When %Parms() = 2 ;                                              
+0030.00        Name = FName + ' ' + Lname ;                                     
+0031.00        Return Name ;                                                    
+0032.00        EndSl ;                                                          
+0033.00 P Str             E                                                     
+0034.00                                                                         
+0035.00  /End-Free                                                              
+        ****************** End of data *****************************************
+READ MEMBER NEXT IN CLLE(RTVMBRD)                                                                                
+        *************** Beginning of data *********************************************
+0001.00              PGM                                                               
+0002.00              DCL        VAR(&FIR) TYPE(*CHAR) LEN(10)                          
+0003.00              DCL        VAR(&NXT) TYPE(*CHAR) LEN(10)                          
+0004.00              DCL        VAR(&MBR_NAME) TYPE(*CHAR) LEN(10)                     
+0005.00              CHGVAR     VAR(&FIR) VALUE(*FIRSTMBR)                             
+0006.00              CHGVAR     VAR(&NXT) VALUE(*SAME)                                 
+0007.00  P:          RTVMBRD    FILE(DAYS) MBR(&FIR &NXT) RTNMBR(&MBR_NAME)            
+0008.00              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ENDPGM))               
+0009.00              SNDUSRMSG  MSG(&MBR_NAME)                                         
+0010.00              CHGVAR     VAR(&FIR) VALUE(&MBR_NAME)                             
+0011.00              CHGVAR     VAR(&NXT) VALUE(*NEXT)                                 
+0012.00              GOTO       CMDLBL(P)                                              
+0013.00  ENDPGM:     ENDPGM                                                            
+        ****************** End of data ************************************************
+READ DATA FROM FILE ON BASIS OF RRN
+        *************** Beginning of data ****************************************
+0001.00              DCLF       FILE(DAYS)                                        
+0002.00              OVRDBF     FILE(DAYS) TOFILE(DAYS) POSITION(*RRN 5)          
+0003.00              RCVF                                                         
+0004.00              SNDPGMMSG  MSG(&NAME)                                        
+0005.00              DLTOVR     FILE(DAYS)                                        
+        ****************** End of data *******************************************
+                

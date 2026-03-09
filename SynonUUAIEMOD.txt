@@ -1,0 +1,310 @@
+Training                                 __________________________           Op: INTRG0101  INTRG0101B  6/02/26 23:58:56 Page:    1   
+COMMAND: YDOCMDLFUN MDLFILE(CAR Carrier) MDLFUN(Update Carrier) PRTFUNOPT(*YES) PRTPARM(*ALL) PRTACTDIAG(*FULL) XPLLVL(2)         
+Model. : INTRG01MDL Student 1                                                                                                     
+----------------------------------------------------------------------------------------------------------------------------------
+REF File: CAR Carrier               Func: Update Carrier            Type: Edit record(1 screen)     Acpth: Retrieval index        
+----------------------------------------------------------------------------------------------------------------------------------
+   Options:                                                                                                                       
+                 Create record  . . . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Change record  . . . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Delete record  . . . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Exit after add . . . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Bypass key screen  . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Dynamic program mode . . . :  N  ( Y-Yes, N-No )                                                                 
+                 Confirm prompt . . . . . . :  N  ( Y-Yes, N-No )                                                                 
+                 Initial value for confirm  :  M  ( M-MDLVAL, Y-Yes, N-No )                                                       
+                 Commit control . . . . . . :  N  ( M-Master, S-Slave, N-None )                                                   
+                 If action bar, what type?  :  M  ( M-MDLVAL, A-Action_bar, D-DDS_menubar )                                       
+                 Generation mode  . . . . . :  A  ( M-MDLVAL, D-DDS, S-SQL, A-ACPVAL )                                            
+                 Generate help  . . . . . . :  M  ( M-MDLVAL, Y-Yes, N-No, O-Only )                                               
+                 Default prototype function :  N  ( Y-Yes, N-No )                                                                 
+                 Help type for NPT  . . . . :  M  ( M-MDLVAL, T-TM, U-UIM )                                                       
+                 Device text constants  . . :  M  ( M-MDLVAL, L-LITERAL, I-MSGID)                                                 
+                 Copy back messages . . . . :  M  ( M-MDLVAL, Y-Yes, N-No )                                                       
+                 Send all error messages  . :  M  ( M-MDLVAL, Y-Yes, N-No )                                                       
+                 Reclaim resources  . . . . :  N  ( Y-Yes, N-No )                                                                 
+                 Generate error routine . . :  M  ( M-MDLVAL, Y-Yes, N-No )                                                       
+                 Close down program . . . . :  Y  ( Y-Yes, N-No )                                                                 
+                 Display time out option  . :  N  ( Y-Yes, N-No )                                                                 
+                 Allow 132 column display . :  N  ( Y-Yes, N-No )                                                                 
+                 Environment :-                                                                                                   
+                 Workstation implementation :  M  ( M-MDLVAL, N-NPT, G-GUI, J-JAVA, V-VB )                                        
+                 Distributed File I/O ctrl  :  M  ( M-MDLVAL, S-Synon, U-User, N-None )                                           
+   Parameters:                                                                                                                    
+                     ___  _____________             _____ ____ ____________              ______________            _______________
+                     FLD  CAR Carrier ID              I   RST  *FIELD                                                             
+..................................................................................................................................
+  1  > Update Carrier                                                                                                             
+  1  .--                                                                                                                          
+  1  . > Initialize program                                                                                                       
+  1  . .--                                                                                                                        
+  1  . . > Set program mode                                                                                                       
+  1  . . .--                                                                                                                      
+  1  . . . .-CASE                                                                                                                 
+  1  . . . ¦-DBF record found                                                                                                     
+  1  . . . ¦ PGM.*Program mode = CND.*CHANGE                                                                                      
+  1  . . . ¦-*OTHERWISE                                                                                                           
+  1  . . . ¦ PGM.*Program mode = CND.*ADD                                                                                         
+  1  . . . '-ENDCASE                                                                                                              
+  1  . . '--                                                                                                                      
+  1  . . > USER: Initialize program                                                                                               
+  1  . . .--                                                                                                                      
+  1  . . '--                                                                                                                      
+  1  . '--                                                                                                                        
+  1  . > Conduct screen conversation                                                                                              
+  1  . .=REPEAT WHILE                                                                                                             
+  1  . |-*ALWAYS                                                                                                                  
+  1  . | > Initialize key screen                                                                                                  
+  1  . | .--                                                                                                                      
+  1  . | . Initialize key fields from parameters                                                                                  
+  1  . | . > USER: Initialize key screen                                                                                          
+  1  . | . .--                                                                                                                    
+  1  . | . '--                                                                                                                    
+  1  . | '--                                                                                                                      
+  1  . | .=REPEAT WHILE                                                                                                           
+  1  . | |-*Transaction continues                                                                                                 
+  1  . | | Display key screen                                                                                                     
+  1  . | | > Process response to key screen                                                                                       
+  1  . | | .-CASE                                                                                                                 
+  1  . | | ¦-KEY.*CMD key is *Exit                                                                                                
+Training                                 __________________________           Op: INTRG0101  INTRG0101B  6/02/26 23:58:56 Page:    2
+Model. : INTRG01MDL Student 1                                                                                                     
+----------------------------------------------------------------------------------------------------------------------------------
+REF File: CAR Carrier               Func: Update Carrier            Type: Edit record(1 screen)            continued...           
+----------------------------------------------------------------------------------------------------------------------------------
+  1  . | | ¦ > Exit program                                                                                                       
+  1  . | | ¦ .--                                                                                                                  
+  1  . | | ¦ . Closedown ===>                                                                                                     
+  1  . | | ¦ '--                                                                                                                  
+  1  . | | ¦-KEY.*CMD key is *Change mode                                                                                         
+  1  . | | ¦ > Change between modes                                                                                               
+  1  . | | ¦ .--                                                                                                                  
+  1  . | | ¦ . .-CASE                                                                                                             
+  1  . | | ¦ . ¦-PGM.*Program mode is *ADD                                                                                        
+  1  . | | ¦ . ¦ PGM.*Program mode = CND.*CHANGE                                                                                  
+  1  . | | ¦ . ¦-*OTHERWISE                                                                                                       
+  1  . | | ¦ . ¦ PGM.*Program mode = CND.*ADD                                                                                     
+  1  . | | ¦ . '-ENDCASE                                                                                                          
+  1  . | | ¦ '--                                                                                                                  
+  1  . | | ¦-KEY.*CMD key is *Reset                                                                                               
+  1  . | | ¦ ...Process reset request                                                                                             
+  1  . | | ¦-KEY.*CMD key is *Help                                                                                                
+  1  . | | ¦ ...Process help request                                                                                              
+  1  . | | ¦-*OTHERWISE                                                                                                           
+  1  . | | ¦ > Validate key screen                                                                                                
+  1  . | | ¦ .--                                                                                                                  
+  1  . | | ¦ . Check key fields                                                                                                   
+  1  . | | ¦ . <--QUIT if errors                                                                                                  
+  1  . | | ¦ . > USER: Validate key screen                                                                                        
+  1  . | | ¦ . .--                                                                                                                
+  1  . | | ¦ . '--                                                                                                                
+  1  . | | ¦ '--                                                                                                                  
+  1  . | | ¦ <--QUIT if errors                                                                                                    
+  1  . | | ¦ > Load detail screen                                                                                                 
+  1  . | | ¦ .--                                                                                                                  
+  1  . | | ¦ . Read Data record                                                                                                   
+  1  . | | ¦ . .-CASE                                                                                                             
+  1  . | | ¦ . ¦-PGM.*Program mode is *ADD                                                                                        
+  1  . | | ¦ . ¦ Initialize detail screen fields                                                                                  
+  1  . | | ¦ . ¦ > USER: Initialize detail screen (new record)                                                                    
+  1  . | | ¦ . ¦ .--                                                                                                              
+  1  . | | ¦ . ¦ '--                                                                                                              
+  1  . | | ¦ . ¦-PGM.*Program mode is *CHANGE                                                                                     
+  1  . | | ¦ . ¦ Move DBF record fields to screen record fields                                                                   
+  1  . | | ¦ . ¦ USER: Calculate function fields                                                                                  
+  1  . | | ¦ . ¦ > USER: Initialize detail screen (existing record)                                                               
+  1  . | | ¦ . ¦ .--                                                                                                              
+  1  . | | ¦ . ¦ '--                                                                                                              
+  1  . | | ¦ . '-ENDCASE                                                                                                          
+  1  . | | ¦ '--                                                                                                                  
+  1  . | | ¦ > Conduct detail screen conversation                                                                                 
+  1  . | | ¦ .=REPEAT WHILE                                                                                                       
+  1  . | | ¦ |-*ALWAYS                                                                                                            
+  1  . | | ¦ | Display detail screen                                                                                              
+  1  . | | ¦ | > Process response to detail screen                                                                                
+  1  . | | ¦ | .-CASE                                                                                                             
+  1  . | | ¦ | ¦-DTL.*CMD key is *Exit                                                                                            
+  1  . | | ¦ | ¦ > Exit program                                                                                                   
+  1  . | | ¦ | ¦ .--                                                                                                              
+  1  . | | ¦ | ¦ . Closedown ===>                                                                                                 
+  1  . | | ¦ | ¦ '--                                                                                                              
+  1  . | | ¦ | ¦-DTL.*CMD key is *Key screen                                                                                      
+  1  . | | ¦ | ¦ > USER: Process key screen request                                                                               
+  1  . | | ¦ | ¦ .--                                                                                                              
+  1  . | | ¦ | ¦ '--                                                                                                              
+  1  . | | ¦ | ¦ Signal end of detail screen conversation                                                                         
+  1  . | | ¦ | ¦-DTL.*CMD key is *Reset                                                                                           
+  1  . | | ¦ | ¦ ...Process reset request                                                                                         
+  1  . | | ¦ | ¦-DTL.*CMD key is *Help                                                                                            
+  1  . | | ¦ | ¦ ...Process help request                                                                                          
+  1  . | | ¦ | ¦-DTL.*CMD key is *Delete                                                                                          
+  1  . | | ¦ | ¦ > Delete Data record                                                                                             
+  1  . | | ¦ | ¦ .--                                                                                                              
+  1  . | | ¦ | ¦ . Display confirm prompt                                                                                         
+Training                                 __________________________           Op: INTRG0101  INTRG0101B  6/02/26 23:58:56 Page:    3
+Model. : INTRG01MDL Student 1                                                                                                     
+----------------------------------------------------------------------------------------------------------------------------------
+REF File: CAR Carrier               Func: Update Carrier            Type: Edit record(1 screen)            continued...           
+----------------------------------------------------------------------------------------------------------------------------------
+  1  . | | ¦ | ¦ . .-CASE                                                                                                         
+  1  . | | ¦ | ¦ . ¦-PGM.*CONFIRM is Do not confirm                                                                               
+  1  . | | ¦ | ¦ . ¦ <--QUIT                                                                                                      
+  1  . | | ¦ | ¦ . '-ENDCASE                                                                                                      
+>>1  . | | ¦ | ¦ . Delete CAR Carrier - CAR Carrier  *                                             DLTOBJ                         
+>>1  . | | ¦ | ¦ .    I      CAR Carrier ID            Assigned at generation time...                                             
+  2  . | | ¦ | ¦ . > Delete CAR Carrier                                                                                           
+  2  . | | ¦ | ¦ . .--                                                                                                            
+  2  . | | ¦ | ¦ . . > USER: Processing before Data update                                                                        
+  2  . | | ¦ | ¦ . . .--                                                                                                          
+  2  . | | ¦ | ¦ . . '--                                                                                                          
+  2  . | | ¦ | ¦ . . DB1.*KEY = PAR.*ALL                                                                                          
+  2  . | | ¦ | ¦ . . Delete Data record                                                                                           
+  2  . | | ¦ | ¦ . . .-CASE                                                                                                       
+  2  . | | ¦ | ¦ . . ¦-Data update error                                                                                          
+  2  . | | ¦ | ¦ . . ¦ PGM.*Return code = CND.*Data update error                                                                  
+  2  . | | ¦ | ¦ . . ¦-*OTHERWISE                                                                                                 
+  2  . | | ¦ | ¦ . . ¦ PGM.*Return code = CND.*Normal                                                                             
+  2  . | | ¦ | ¦ . . ¦ > USER: Processing after Data update                                                                       
+  2  . | | ¦ | ¦ . . ¦ .--                                                                                                        
+  2  . | | ¦ | ¦ . . ¦ '--                                                                                                        
+  2  . | | ¦ | ¦ . . '-ENDCASE                                                                                                    
+  2  . | | ¦ | ¦ . '--                                                                                                            
+  1  . | | ¦ | ¦ '--                                                                                                               
+  1  . | | ¦ | ¦-*OTHERWISE                                                                                                        
+  1  . | | ¦ | ¦ > Process detail screen                                                                                           
+  1  . | | ¦ | ¦ .--                                                                                                               
+  1  . | | ¦ | ¦ . Check fields                                                                                                    
+  1  . | | ¦ | ¦ . <--QUIT if errors                                                                                               
+  1  . | | ¦ | ¦ . > USER: Validate detail screen fields                                                                           
+  1  . | | ¦ | ¦ . .--                                                                                                             
+  1  . | | ¦ | ¦ . '--                                                                                                             
+  1  . | | ¦ | ¦ . Check relations                                                                                                 
+  1  . | | ¦ | ¦ . <--QUIT if errors                                                                                               
+  1  . | | ¦ | ¦ . > CALC: Detail screen function fields                                                                           
+  1  . | | ¦ | ¦ . .--                                                                                                             
+  1  . | | ¦ | ¦ . '--                                                                                                             
+  1  . | | ¦ | ¦ . > USER: Validate detail screen relations                                                                        
+  1  . | | ¦ | ¦ . .--                                                                                                             
+  1  . | | ¦ | ¦ . '--                                                                                                             
+  1  . | | ¦ | ¦ . <--QUIT if errors                                                                                               
+  1  . | | ¦ | ¦ . Display confirm prompt                                                                                          
+  1  . | | ¦ | ¦ . .-CASE                                                                                                         
+  1  . | | ¦ | ¦ . ¦-PGM.*CONFIRM is Do not confirm                                                                               
+  1  . | | ¦ | ¦ . ¦ <--QUIT                                                                                                      
+  1  . | | ¦ | ¦ . '-ENDCASE                                                                                                      
+  1  . | | ¦ | ¦ . > Update DBF                                                                                                   
+  1  . | | ¦ | ¦ . .-CASE                                                                                                         
+  1  . | | ¦ | ¦ . ¦-PGM.*Program mode is *ADD                                                                                    
+>>1  . | | ¦ | ¦ . ¦ Create CAR Carrier - CAR Carrier  *                                           CRTOBJ                         
+>>1  . | | ¦ | ¦ . ¦    I      CAR Carrier ID            Assigned at generation time...                                           
+>>1  . | | ¦ | ¦ . ¦    I      CAR Carrier Name          Assigned at generation time...                                           
+>>1  . | | ¦ | ¦ . ¦    I      CAR Mailing State         Assigned at generation time...                                           
+>>1  . | | ¦ | ¦ . ¦    I      CAR Phone                 Assigned at generation time...                                           
+>>1  . | | ¦ | ¦ . ¦    I      CHG User Name             Assigned at generation time...                                           
+>>1  . | | ¦ | ¦ . ¦    I      CHG Date                  Assigned at generation time...                                           
+  2  . | | ¦ | ¦ . ¦ > Create CAR Carrier                                                                                         
+  2  . | | ¦ | ¦ . ¦ .--                                                                                                          
+  2  . | | ¦ | ¦ . ¦ . DB1.*ALL = PAR.*ALL                                                                                        
+  2  . | | ¦ | ¦ . ¦ . > USER: Processing before Data update                                                                      
+  2  . | | ¦ | ¦ . ¦ . .--                                                                                                        
+  2  . | | ¦ | ¦ . ¦ . '--                                                                                                         
+  2  . | | ¦ | ¦ . ¦ . Position on Data                                                                                            
+  2  . | | ¦ | ¦ . ¦ . .-CASE                                                                                                      
+  2  . | | ¦ | ¦ . ¦ . ¦-Record already exists                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ PGM.*Return code = CND.*Record already exists                                                             
+  2  . | | ¦ | ¦ . ¦ . ¦ > USER: Processing if Data record already exists                                                          
+  2  . | | ¦ | ¦ . ¦ . ¦ .--                                                                                                       
+  2  . | | ¦ | ¦ . ¦ . ¦ '--                                                                                                       
+Training                                 __________________________           Op: INTRG0101  INTRG0101B  6/02/26 23:58:56 Page:    4 
+Model. : INTRG01MDL Student 1                                                                                                      
+---------------------------------------------------------------------------------------------------------------------------------- 
+REF File: CAR Carrier               Func: Update Carrier            Type: Edit record(1 screen)            continued...            
+---------------------------------------------------------------------------------------------------------------------------------- 
+  2  . | | ¦ | ¦ . ¦ . ¦-*OTHERWISE                                                                                                
+  2  . | | ¦ | ¦ . ¦ . ¦ Write Data record                                                                                         
+  2  . | | ¦ | ¦ . ¦ . ¦ .-CASE                                                                                                    
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦-Data update error                                                                                       
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ PGM.*Return code = CND.*Data update error                                                               
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ > USER: Processing if Data update error                                                                 
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ .--                                                                                                    
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ '--                                                                                                    
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦-*OTHERWISE                                                                                             
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ PGM.*Return code = CND.*Normal                                                                         
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ > USER: Processing after Data update                                                                   
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ .--                                                                                                    
+  2  . | | ¦ | ¦ . ¦ . ¦ ¦ '--                                                                                                    
+  2  . | | ¦ | ¦ . ¦ . ¦ '-ENDCASE                                                                                                
+  2  . | | ¦ | ¦ . ¦ . '-ENDCASE                                                                                                  
+  2  . | | ¦ | ¦ . ¦ '--                                                                                                          
+  1  . | | ¦ | ¦ . ¦-PGM.*Program mode is *CHANGE                                                                                 
+>>1  . | | ¦ | ¦ . ¦ Change CAR Carrier - CAR Carrier  *                                           CHGOBJ                         
+>>1  . | | ¦ | ¦ . ¦    I      CAR Carrier ID            = DTL.CAR Carrier ID                                                     
+>>1  . | | ¦ | ¦ . ¦    I      CAR Carrier Name          = DTL.CAR Carrier Name                                                   
+>>1  . | | ¦ | ¦ . ¦    I      CAR Mailing State         = DTL.CAR Mailing State                                                  
+>>1  . | | ¦ | ¦ . ¦    I      CAR Phone                 = DTL.CAR Phone                                                          
+>>1  . | | ¦ | ¦ . ¦    I      CHG User Name             = JOB.*USER                                                              
+>>1  . | | ¦ | ¦ . ¦    I      CHG Date                  = JOB.*Job date                                                          
+  2  . | | ¦ | ¦ . ¦ > Change CAR Carrier                                                                                         
+  2  . | | ¦ | ¦ . ¦ .--                                                                                                           
+  2  . | | ¦ | ¦ . ¦ . > USER: Processing before Data read                                                                         
+  2  . | | ¦ | ¦ . ¦ . .--                                                                                                         
+  2  . | | ¦ | ¦ . ¦ . '--                                                                                                         
+  2  . | | ¦ | ¦ . ¦ . DB1.*KEY = PAR.*ALL                                                                                         
+  2  . | | ¦ | ¦ . ¦ . Read Data record                                                                                            
+  2  . | | ¦ | ¦ . ¦ . .-CASE                                                                                                      
+  2  . | | ¦ | ¦ . ¦ . ¦-Data record not found                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ PGM.*Return code = CND.*Record does not exist                                                             
+  2  . | | ¦ | ¦ . ¦ . ¦ > USER: Processing if Data record not found                                                               
+  2  . | | ¦ | ¦ . ¦ . ¦ .--                                                                                                       
+  2  . | | ¦ | ¦ . ¦ . ¦ '--                                                                                                       
+  2  . | | ¦ | ¦ . ¦ . ¦-*OTHERWISE                                                                                                
+  2  . | | ¦ | ¦ . ¦ . ¦ > Update Data record                                                                                      
+  2  . | | ¦ | ¦ . ¦ . ¦ .--                                                                                                       
+  2  . | | ¦ | ¦ . ¦ . ¦ . > USER: Processing after Data read                                                                      
+  2  . | | ¦ | ¦ . ¦ . ¦ . .--                                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ . '--                                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ . DB1.*ALL = PAR.*ALL                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ . > USER: Processing before Data update                                                                   
+  2  . | | ¦ | ¦ . ¦ . ¦ . .--                                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ . '--                                                                                                     
+  2  . | | ¦ | ¦ . ¦ . ¦ . Update Data record                                                                                      
+  2  . | | ¦ | ¦ . ¦ . ¦ . .-CASE                                                                                                  
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦-Data record not updated                                                                               
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦ PGM.*Return code = CND.*Data update error                                                             
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦-*OTHERWISE                                                                                            
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦ PGM.*Return code = CND.*Normal                                                                        
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦ > USER: Processing after Data update                                                                  
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦ .--                                                                                                   
+  2  . | | ¦ | ¦ . ¦ . ¦ . ¦ '--                                                                                                   
+  2  . | | ¦ | ¦ . ¦ . ¦ . '-ENDCASE                                                                                               
+  2  . | | ¦ | ¦ . ¦ . ¦ '--                                                                                                       
+  2  . | | ¦ | ¦ . ¦ . '-ENDCASE                                                                                                   
+  2  . | | ¦ | ¦ . ¦ '--                                                                                                           
+  1  . | | ¦ | ¦ . '-ENDCASE                                                                                                       
+  1  . | | ¦ | ¦ . <--QUIT if errors                                                                                               
+  1  . | | ¦ | ¦ . Commit DBF updates                                                                                              
+  1  . | | ¦ | ¦ . > USER: Process command keys                                                                                    
+  1  . | | ¦ | ¦ . .--                                                                                                             
+  1  . | | ¦ | ¦ . '--                                                                                                             
+  1  . | | ¦ | ¦ '--                                                                                                               
+  1  . | | ¦ | '-ENDCASE                                                                                                           
+  1  . | | ¦ '-ENDWHILE                                                                                                            
+Training                                 __________________________           Op: INTRG0101  INTRG0101B  6/02/26 23:58:56 Page:    5   
+Model. : INTRG01MDL Student 1                                                                                                      
+---------------------------------------------------------------------------------------------------------------------------------- 
+REF File: CAR Carrier               Func: Update Carrier            Type: Edit record(1 screen)            continued...            
+---------------------------------------------------------------------------------------------------------------------------------- 
+  1  . | | '-ENDCASE                                                                                                               
+  1  . | '-ENDWHILE                                                                                                                
+  1  . '-ENDWHILE                                                                                                                  
+  1  . > Closedown                                                                                                                 
+  1  . .--                                                                                                                         
+  1  . . > USER: Exit program processing                                                                                           
+  1  . . .--                                                                                                                       
+  1  . . '--                                                                                                                       
+  1  . . *EXIT PROGRAM                                                                                                             
+  1  . '--                                                                                                                         
+  1  '--                                                                                                                           
+.................................................................................................................................. 
+---------------------------------------------------------------------------------------------------------------------------------- 
+** END OF REPORT **                                                                                                                
